@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Geo-Location</title>
+<style>
+input[type="text"],textarea
+{
+	position:absolute;
+	left:100px;
+}
+#addr{
+height:100px;
+width:200px;
+}
+</style>
+    <script src="includes/jquery.js"> </script>
+    <script src="http://maps.googleapis.com/maps/api/js?key=AIzaSyDY0kkJiTPVd2U7aTOAwhc9ySH6oHxOIYM&sensor=false"></script>
+   
+<script>
+    $(document).ready(function () {
+        // wire up button click
+        $('#go').click(function () {
+            // test for presence of geolocation
+            if (navigator && navigator.geolocation) {
+                // make the request for the user's position
+                navigator.geolocation.getCurrentPosition(geo_success,showError);
+            } else {
+                // use MaxMind IP to location API fallback
+                $('#demo').html("Geolocation is not supported by this browser.");
+            }
+        });
+     
+     
+    function geo_success(position){
+                                  printAddress(position.coords.latitude, position.coords.longitude);
+                                 }
+     
+  function showError(error)
+  {
+  switch(error.code) 
+    {
+    case error.PERMISSION_DENIED:
+	   $('#demo').html("User denied the request for Geolocation.");
+          break;
+    case error.POSITION_UNAVAILABLE:
+	$('#demo').html("Location information is unavailable.");
+          break;
+    case error.TIMEOUT:
+	$('#demo').html("The request to get user location timed out.");
+     
+      break;
+    case error.UNKNOWN_ERROR:
+	$('#demo').html("An unknown error occurred.");
+          break;
+    }
+  }
+
+     
+    // use Google Maps API to reverse geocode our location
+    function printAddress(latitude, longitude) {
+		
+		$('#lon').val(latitude);
+		$('#lat').val(longitude);
+        // set up the Geocoder object
+        var geocoder = new google.maps.Geocoder();
+     
+        // turn coordinates into an object
+        var yourLocation = new google.maps.LatLng(latitude, longitude);
+     
+     
+        // find out info about our location
+        geocoder.geocode({ 'latLng': yourLocation }, function (results, status) {
+            if (status == google.maps.GeocoderStatus.OK) {
+                if (results[0]) {
+                   $('#addr').val(results[0].formatted_address);
+                } else {
+                    error('Google did not return any results.');
+                }
+            } else {
+                error("Reverse Geocoding failed due to: " + status);
+            }
+        });
+     
+       
+    }
+     
+    function error(msg) {
+        alert(msg);
+    }
+	});
+   
+    </script>
+</head>
+<body>
+
+<p id="demo">Click the TRACE button to get your coordinates:</p>
+<label>Longitude:</label><input id="lon" type="text"/><br/><br/>
+<label>Lattitude:</label><input id="lat" type="text"/><br/><br/>
+<label>Address:</label><textarea id="addr"></textarea><br/><br/>
+<button id="go">Trace</button>
+</body>
+</html>

@@ -1,0 +1,23 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<title>Webworker1</title>
+  <script>
+      function callWebworker(){
+         for (var i = 0; i <=10000000000; i += 1){
+            var j = i;
+         }
+        x=document.getElementById("input_val").value;
+		x=parseInt(x);
+		document.getElementById("result").innerHTML=x*j;
+      }
+    
+  </script>
+</head>
+<body>
+  <label>Input</label><input id="input_val" type="number"/>
+  <input type="button" onclick="callWebworker()" value="ok"/><br/><br/>
+  <label>Result: </label><p id="result" style="display:inline;"></p>
+</body>
+</html>
+ 

@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html>
+      <head>
+      <meta charset="utf-8">
+      <title>SignUp_form</title>
+      <style>
+body {
+	font-family:Calibri;
+}
+.fl {
+	float:left;
+}
+.fr {
+	float:right;
+}
+.clr {
+	clear:both;
+}
+.container {
+	margin:0 auto;
+	width:980px;
+}
+header {
+	padding:25px 0 25px 0;
+	text-indent:30px;
+	background:#ccc;
+	margin:10px 0 10px 0;
+	border-radius:10px;
+	font-size:18px;
+}
+.main {
+	position:relative;
+	background:#e1e1e1;
+	border-radius:10px;
+	width:740px;
+	height:600px;
+}
+.right {
+	width:215px;
+	background:#e1e1e1;
+	border-radius:20px;
+	height:580px;
+	padding:20px 0 0 15px;
+}
+form {
+	position:relative;
+	margin:50px 0 0 200px;
+}
+label {
+}
+.gender, .hobbies {
+	position:absolute;
+	left:175px;
+}
+.txt_box {
+	position:absolute;
+	left:150px;
+}
+input[type="radio"], .hobbies_chk {
+	position:absolute;
+	left:150px;
+	margin-top:5px;
+}
+input[type="submit"], input[type="reset"] {
+	margin-top:20px;
+}
+/* hack for float properties */
+.clearfix:after {
+	clear: both;
+	content: ".";
+	display: block;
+	height: 0;
+	visibility: hidden;
+}
+.clearfix {
+	display: inline-block;
+}
+* html .clearfix {
+	height: 1%;
+}
+.clearfix {
+	display: block;
+}
+* + html .clearfix {
+	display: inline-block;
+}
+</style>
+<script type="text/javascript" src="includes/jquery.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){
+          $('#submt,#rest').attr('disabled','disabled');
+          $('input[type=radio]').bind('click',function(){
+	                                                    x=$(this).val();
+	                                                    $('#selected_gender').html(x)
+                                                        });
+
+$('#username,#firstname').live('keyup',function(){
+	                                             enable();
+												 });
+$('#terms_condtns').live('click',function(){ 
+                                           enable();
+										   });
+
+ function enable()
+ {
+  var pattern1=/\s/;
+  var pattern2=/\S/;
+	
+  usrname=$('#username').val();
+  firstname=$('#firstname').val();
+  terms=$('#terms_condtns').attr('checked');
+
+  var test1=pattern1.test(usrname);
+  var test2=pattern2.test(usrname);
+  var test3=pattern1.test(firstname);
+  var test4=pattern2.test(firstname);
+  var test5=usrname.length>0;
+  var test6=firstname.length>0;
+
+     if(!((test1)&&!(test2))&&test5&&terms)
+           $('#submt').removeAttr('disabled');
+     else
+           $('#submt').attr('disabled','disabled');
+
+     if(!((test1)&&!(test2))&&!((test3)&&!(test4))&&test5&&test6)
+            $('#rest').removeAttr('disabled');
+     else
+             $('#rest').attr('disabled','disabled');
+  }
+
+});
+      </script>
+      </head>
+      <body>
+      <div class="container clearfix">
+        <header>SignUp Form </header>
+        <section class="main fl">
+          <form>
+            <label>User Name: </label>
+            <input class="txt_box" id="username" name="username" type="text" />
+            <br/>
+            <br/>
+            <label>First Name: </label>
+            <input class="txt_box" id="firstname" name="firstname" type="text" />
+            <br/>
+            <br/>
+            <label>Last Name:</label>
+            <input class="txt_box" name="lastname" type="text" />
+            <br/>
+            <br/>
+            <label>Email:</label>
+            <input class="txt_box" name="email" type="email" />
+            <br/>
+            <br/>
+            <label>Password:</label>
+            <input class="txt_box" name="password" type="password" />
+            <br/>
+            <br/>
+            <label>Confirm Password:</label>
+            <input class="txt_box" name="confirmpassword" type="password" />
+            <br/>
+            <br/>
+            <label>Gender:</label>
+            <input type="radio" name="sex" value="male">
+            <label class="gender">Male</label>
+            <br/>
+            <input type="radio" name="sex" value="female">
+            <label class="gender">Female</label>
+            <br/>
+            <br/>
+            <label>Hobbies/Interest:</label>
+            <input type="checkbox" class="hobbies_chk" value="music">
+            <label class="hobbies">Listening to Music</label>
+            <br/>
+            <input type="checkbox" class="hobbies_chk" value="books">
+            <label class="hobbies">Reading Books</label>
+            <br/>
+            <input type="checkbox" class="hobbies_chk" value="painting">
+            <label class="hobbies">Painting</label>
+            <br/>
+            <label>Address:</label>
+            <br/>
+            <input name="addressfield1" type="text" />
+            <br/>
+            <input name="addressfield2" type="text" />
+            <br/>
+            <input name="addressfield3" type="text" />
+            <br/>
+            <br/>
+            <input type="checkbox" id="terms_condtns" name="hobbies" value="Car"/>
+            <label>Apply terms and Conditions</label>
+            <br/>
+            <input id="submt" type="submit" value="Submit"/>
+            <input id="rest" type="reset" value="Reset"/>
+          </form>
+        </section>
+        <section class="right fr">
+          <p>Selected gender:</p>
+          <p id="selected_gender"></p>
+        </section>
+      </div>
+</body>
+</html>

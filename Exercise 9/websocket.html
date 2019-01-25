@@ -1,0 +1,53 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<title>WebSocket</title>
+<script type="text/javascript" src="includes/jquery.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){
+	
+$("#load").bind('click',function(){
+	                               WebSocketTest();
+	                               });	
+function WebSocketTest()
+{
+  if ("WebSocket" in window)
+  {
+     alert("WebSocket is supported by your Browser!");
+     // Let us open a web socket
+     var ws = new WebSocket('ws://html5rocks.websocket.org/echo', ['soap', 'xmpp']);
+
+     ws.onopen = function()
+     {
+        // Web Socket is connected, send data using send()
+        ws.send('data.html');
+        alert("Message is sent...");
+     };
+     ws.onmessage = function (evt) 
+     { 
+        var received_msg = evt.data;
+		$('#sktCntHldr').load(received_msg);
+        alert("Message is received...");
+     };
+     ws.onclose = function()
+     { 
+        // websocket is closed.
+        alert("Connection is closed..."); 
+     };
+  }
+  else
+  {
+     // The browser doesn't support WebSocket
+     alert("WebSocket NOT supported by your Browser!");
+  }
+}
+});
+</script>
+</head>
+<body>
+<article id='sktCntHldr' style="height:400px; width:500px; margin:20px auto; background:#ccc;">
+</article>
+<input type="button" value="Load" id="load" style=" margin-left:590px;" />
+</body>
+</html>
+ 

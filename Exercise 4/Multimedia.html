@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html>
+      <head>
+      <meta charset="utf-8">
+      <title>Multimedia</title>
+      <style>
+body {
+	font-family:Calibri;
+}
+.fl {
+	float:left;
+}
+.fr {
+	float:right;
+}
+.clr {
+	clear:both;
+}
+.container {
+	margin:0 auto;
+	width:980px;
+}
+header {
+	padding:25px 0 25px 0;
+	text-indent:30px;
+	background:#ccc;
+	margin:10px 0 10px 0;
+	border-radius:10px;
+	font-size:18px;
+}
+section.right {
+	width:215px;
+	background:#e1e1e1;
+	border-radius:20px;
+	height:480px;
+	padding:20px 0 0 15px;
+	font-size:11px;
+}
+.btn {
+	width:190px;
+	background:#b7b7b7;
+	margin-top:5px;
+	padding:5px;
+	border-radius:6px;
+	border:2px solid #949494;
+	cursor:pointer;
+}
+.btn_active {
+	width:190px;
+	margin-top:5px;
+	padding:5px;
+	border-radius:6px;
+	cursor:pointer;
+	border:1px solid #4a7ebb;
+	background: -webkit-linear-gradient(top, #e3edff, #a6c6ff);
+	background: -moz-linear-gradient(top, #e3edff, #a6c6ff);
+	background: -ms-linear-gradient(top, #e3edff, #a6c6ff);
+}
+.left {
+	background:#e1e1e1;
+	border-radius:10px;
+	width:740px;
+	height:500px;
+}
+.video_container {
+	position:relative;
+	margin:50px 0 0 120px;
+	width:500px;
+	height:300px;
+	background:#4f81bd;
+	border:3px solid #385d8a;
+	border-radius:10px;
+}
+.video_container h1 {
+	margin:120px 0 0 100px;
+	font-size:40px;
+	color:#e1e1e1;
+	font-weight:normal;
+}
+video {
+	position:absolute;
+	top:0;
+}
+audio {
+	margin:30px 0px 0px 200px;
+}
+/* hack for float properties */
+.clearfix:after {
+	clear: both;
+	content: ".";
+	display: block;
+	height: 0;
+	visibility: hidden;
+}
+.clearfix {
+	display: inline-block;
+}
+* html .clearfix {
+	height: 1%;
+}
+.clearfix {
+	display: block;
+}
+* + html .clearfix {
+	display: inline-block;
+}
+</style>
+      <script src="includes/jquery.js"> </script>
+      <script type="text/javascript">
+	  var element,audio_video;
+$(document).ready(function(){
+                            audio_video=1;	
+                            $('input:eq(0)').attr('checked','checked');
+                            });
+		        
+  function controls(x)
+	{
+	 if(audio_video==1)
+	 element=document.getElementsByTagName("video")[0];
+	 else
+	 element=document.getElementsByTagName("audio")[0];
+	 
+	 $('.buttn').removeClass('btn_active').addClass('btn');
+	 $('.buttn:eq('+x+')').removeClass('btn').addClass('btn_active');
+	 
+	  switch(x)
+	  {
+		  case 0:
+		     element.play();
+		     break;
+		  case 1:
+		     element.pause();
+		     break;
+		  case 2:
+		     element.currentTime=0;
+             setTimeout("element.pause()",10);
+		     break;
+		  case 3:
+		     element.setAttribute("loop","loop");
+		     break;
+		  case 4:
+		     element.currentTime=10;
+		     break;
+		  
+	   }
+        
+     }
+	 
+	 function aud_vid(val)
+	 {  
+	     $('.buttn').removeClass('btn_active').addClass('btn');
+		 audio_video=val;
+		 if(val==1)
+		 ele=document.getElementsByTagName("audio")[0];
+		 else 
+		 ele=document.getElementsByTagName("video")[0];
+		 ele.currentTime=0;
+         setTimeout("ele.pause()",10); 
+		 
+	 }
+		
+      </script>
+      </head>
+      <body>
+      <div class="container clearfix">
+        <header>Controling Audio/Video</header>
+        <section  class="left fl">
+          <div class="video_container">
+            <h1>VIDEO CONTAINER</h1>
+            <video id="vid" width="500" height="300" >
+              <source src="videos/Wildlife.ogg" type="video/ogg" />
+              <source src="videos/Wildlife.mp4" type="video/mp4" />
+            </video>
+          </div>
+          <audio controls="controls">
+            <source src="videos/Wildlife.ogg" type="audio/ogg" />
+            <source src="videos/Wildlife.mp4" type="audio/mp4" />
+          </audio>
+        </section>
+        <section class="right fr">
+          <input onClick="aud_vid(1)" type="radio" name="audio/video" value="video"/>
+          <label>video</label>
+          <input onClick="aud_vid(2)" type="radio" name="audio/video" value="audio"/>
+          <label>audio</label>
+          <article onClick="controls(0)" class="buttn btn">Play</article>
+          <article onClick="controls(1)" class="buttn btn">Pause</article>
+          <article onClick="controls(2)" class="buttn btn">Stop</article>
+          <article onClick="controls(3)" class="buttn btn">Loop</article>
+          <article onClick="controls(4)" class="buttn btn">Seek to 10 seconds</article>
+        </section>
+      </div>
+</body>
+</html>

@@ -1,0 +1,25 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<title>Webworker2</title>
+  <script>
+  function callWebworker(){
+      var worker = new Worker('includes/bigLoop.js');
+      worker.onmessage = function (event) {
+    	x=document.getElementById("input_val").value;
+		x=parseInt(x);
+		y=parseInt(event.data);
+		document.getElementById("result").innerHTML=x*y;
+      };
+  }
+      function sayHello(){
+         alert("Hello sir...." );
+      }
+  </script>
+</head>
+<body>
+  <label>Input</label><input id="input_val" type="number"/>
+  <input type="button" onclick="callWebworker()" value="ok"/><br/><br/>
+  <label>Result: </label><p id="result" style="display:inline;"></p>
+</body>
+</html>
